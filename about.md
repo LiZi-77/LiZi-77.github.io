@@ -1,18 +1,17 @@
 ---
-title: Colophon
+title: About Me
 permalink: /about/
 layout: page
-excerpt: Hello peeps, I'm student of computer science from Banyuwangi, living in Jogjakarta. This blog for documentation about my programming journey, running on jekyll, hosting on netlify and using my own simple theme.
+excerpt:
 comments: false
 ---
 
-He's a student from Banyuwangi, living in Jogjakarta. the blog for documentation about his programming 🎒 journey, running on jekyll, hosting on [now.sh](http://now.sh) and using his own theme, he name it <a href="https://github.com/piharpi/jekyll-klise" target="_blank" rel="noopener">klisé</a>, he also loves to learning web technology; but he often forgot, that a reason why him doing the writing.
+Hi! This is Lizi 🧚🏻‍♀️, currently living in Copenhagen, orginally from China.
 
-If you have a question about him or else, just send a letter to him.
+Just got the MSc degree of Computer Science 👩🏻‍🎓 in University of Copenhagen, and now trying to exploring all possibilities of my life ✨.
 
-You can [report](http://github.com/piharpi/jekyll-klise/issues/new) if there is an broken link(s) or somethings else.
+**To know more about me 🍄**
 
-**may u needs ✨**
+You can check my Linkedin profile [here](https://www.linkedin.com/in/ziqian-lii/).
 
-- {{ site.author.email }}
-- github.com/{{ site.author.github }}
+And also my Github profile [here](https://github.com/LiZi-77).
