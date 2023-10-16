@@ -16,7 +16,6 @@ author:
   bio: >- # tell to the world
     Hi! This is Lizi 🧚🏻‍♀️, currently living in Copenhagen, orginally from China. This is my homepage to archive technical documents 📜 and also 
     log the sweet memos in my life ✨.
-
   username: Lizi # general username
   github: LiZi-77 # github username
   twitter: twitter_username # twitter username
@@ -25,8 +24,8 @@ author:
   avatar: /assets/img/monv1.png # change with your own avatar
 
 # URL settings
-url: "https://klise.now.sh" #
-baseurl:
+url: "https://github.com/LiZi-77" #
+baseurl: "/"
 permalink: /:title/
 google_analytics: # leave it blank if not wish
 fb_appid:
