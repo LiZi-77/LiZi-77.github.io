@@ -24,7 +24,7 @@ author:
   avatar: /assets/img/monv1.png # change with your own avatar
 
 # URL settings
-url: "https://github.com/LiZi-77" #
+url: "/" #
 baseurl: "/"
 permalink: /:title/
 google_analytics: # leave it blank if not wish
