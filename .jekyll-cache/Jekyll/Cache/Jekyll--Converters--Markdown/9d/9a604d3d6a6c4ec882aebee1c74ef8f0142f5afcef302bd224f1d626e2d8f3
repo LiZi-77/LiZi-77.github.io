@@ -1,0 +1,42 @@
+I"A<p>Pipeline refers to a sequence of data processing steps, users can use a pipeline to combine several data processing steps together to form a machine learning work flow. Within a pipeline, each step performs a unique operations such as data preprocessing, model training, and evaluation.</p>
+
+<p>There have been several notable contributions towards automating and simplifying the machine learning pipeline.  One contribution is the <code class="language-plaintext highlighter-rouge">sklearn.pipeline</code> module, provided by the widely-used Python library Scikit-learn.</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">sklearn.pipeline</code> module make it possible to plug in a sequence of processing steps to form a machine learning workflow. Since it is part of the <code class="language-plaintext highlighter-rouge">sklearn</code> library, it can make use of the predefined machine learning algorithms or operations provided by <code class="language-plaintext highlighter-rouge">sklearn</code> such as clustering algorithms <code class="language-plaintext highlighter-rouge">DBSCAN</code>,<code class="language-plaintext highlighter-rouge">KMeans</code> and also data preprocessing operations <code class="language-plaintext highlighter-rouge">normalize</code> and <code class="language-plaintext highlighter-rouge">standard scalar</code>. By using the pipeline module, users can easily combine basic algorithms to a complex machine learning model.</p>
+
+<p>To utilize <code class="language-plaintext highlighter-rouge">sklearn.pipeline</code>, users must have a fundamental understanding of two key concepts: <code class="language-plaintext highlighter-rouge">Transformer</code> and <code class="language-plaintext highlighter-rouge">Estimator</code>. These concepts form the building blocks of the scikit-learn library and are essential for constructing effective machine learning workflows.</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">Transformer</code>:
+    <ul>
+      <li>in sklearn, <strong>transformers</strong> are objects or classes that perform data transformation operations.</li>
+      <li>Transformers have two primary methods: <code class="language-plaintext highlighter-rouge">fit()</code> and <code class="language-plaintext highlighter-rouge">transform()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">sklearn</code> provide a class <code class="language-plaintext highlighter-rouge">base.TransformerMixin</code> which is the mixin class for all transformers in scikit-learn.</li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">Estimator</code>
+    <ul>
+      <li>in <code class="language-plaintext highlighter-rouge">sklearn</code>, estimatiors are objects or classes that implement machine learning models or algorithms.</li>
+      <li>Estimators have two primary methods: <code class="language-plaintext highlighter-rouge">fit()</code> and <code class="language-plaintext highlighter-rouge">predict()</code>.</li>
+      <li><code class="language-plaintext highlighter-rouge">sklearn</code> provide a class <code class="language-plaintext highlighter-rouge">base.BaseEstimator</code> which is the base class for all estimators in scikit-learn.</li>
+    </ul>
+  </li>
+</ul>
+
+<p>The <code class="language-plaintext highlighter-rouge">sklearn.pipeline</code> module are includes 2 classes:</p>
+<ul>
+  <li>pipeline.Feature
+    <ul>
+      <li><strong>pipeline.Feature</strong> class concates the result of multiple transformer objects.</li>
+    </ul>
+  </li>
+  <li>pipeline.Pipeline
+    <ul>
+      <li><strong>pipeline.Pipeline</strong> class describe a pipeline of transformers with a final estimator. However, it is not necessary for a pipeline to end with an estimator. In cases where a user solely wants to obtain sequentially transformed data without applying an additional machine learning model on the transformed data, they can create a pipeline consisting solely of transformers. This pipeline will apply each transformer in the specified order to the input data, generating the desired sequential transformations.</li>
+    </ul>
+  </li>
+</ul>
+
+<p>More details can be found on the website of <code class="language-plaintext highlighter-rouge">sklearn</code></p>
+
+<p>In our project, we have encapsulated the process of defining a complex multi-input pipeline within a function by creating new classes that build upon the existing classes mentioned earlier. These new classes inherit the functionalities and capabilities of the base classes while introducing additional features and customization options to suit our specific project requirements.</p>
+:ET

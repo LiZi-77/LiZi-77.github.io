@@ -1,0 +1,2 @@
+I"&<p>Pipeline refers to a sequence of data processing steps, users can use a pipeline to combine several data processing steps together to form a machine learning work flow. Within a pipeline, each step performs a unique operations such as data preprocessing, model training, and evaluation.</p>
+:ET
