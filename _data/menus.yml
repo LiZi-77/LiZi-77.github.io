@@ -11,8 +11,8 @@
   external: false # set true if you using external link, see below
 
 - title: CV
-  url: https://drive.google.com/file/d/1QyhRVHNEgijWMDEcQhOJnjNDenhQjTYo/view?usp=sharing
-  external: true
+  url: /assets/resume.pdf
+  external: false
 # Example:
 # - title: github
 #   url: https://github.com/piharpi/jekyll-klise
