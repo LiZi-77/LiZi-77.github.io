@@ -4,9 +4,9 @@
 
 @mixin light-scheme {
   /* Framework color */
-  --main-bg: white;
+  --main-bg: rgb(239 236 236);
   --mask-bg: #c1c3c5;
-  --main-border-color: #f3f3f3;
+  --main-border-color: #86848457;
 
   /* Common color */
   --text-color: #34343c;
@@ -39,16 +39,16 @@
   );
 
   /* Sidebar */
-  --site-title-color: rgb(216, 215, 215);
-  --site-subtitle-color: #d2cece;
+  --site-title-color: rgb(37, 37, 37, 0.75);
+  --site-subtitle-color: rgb(37, 37, 37, 0.75);
   --sidebar-bg: #f6f8fa;
-  --sidebar-border-color: #efefef;
-  --sidebar-muted-color: #545454;
+  --sidebar-border-color: rgb(239 236 236);
+  --sidebar-muted-color: rgb(37, 37, 37, 0.75);
   --sidebar-active-color: #1d1d1d;
   --sidebar-hover-bg: rgb(223, 233, 241, 0.64);
   --sidebar-btn-bg: white;
   --sidebar-btn-color: #8e8e8e;
-  --avatar-border-color: white;
+  --avatar-border-color: rgb(206, 206, 206, 0.6);
 
   /* Topbar */
   --topbar-bg: rgb(255, 255, 255, 0.7);
