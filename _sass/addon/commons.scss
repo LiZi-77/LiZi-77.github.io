@@ -682,7 +682,7 @@ $btn-mb: 0.5rem;
   /*background: var(--sidebar-bg);*/
 
   /* change for background image */
-  background-image: url('../../assets/img/bg_avatar/10.jpeg');
+  background-image: url('../../assets/img/banner/mix.jpeg');
   background-size: cover !important;
   background-repeat: no-repeat !important;
   background-position: center !important;
@@ -734,13 +734,14 @@ $btn-mb: 0.5rem;
     width: 100%;
   }
 
+  //sidebar website title font settings
   .site-title {
     font-family: inherit;
     font-weight: 900;
     font-size: 1.75rem;
     line-height: 1.2;
     letter-spacing: 0.25px;
-    margin-top: 1.25rem;
+    margin-top: 5rem;
     margin-bottom: 0.5rem;
 
     a {
@@ -784,13 +785,13 @@ $btn-mb: 0.5rem;
         }
 
         i {
-          font-size: 95%;
+          font-size: 80%;
           opacity: 0.8;
           margin-right: 1.5rem;
         }
 
         span {
-          font-size: 90%;
+          font-size: 80%;
           letter-spacing: 0.2px;
         }
       }
