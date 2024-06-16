@@ -4,6 +4,14 @@ refactor: true
 ---
 
 <body>
+  <header class="welcome-banner">
+    <h1>A room of One's Own</h1>
+    <img
+      class="banner-image"
+      src="{{ '/assets/img/banner/image.png' | relative_url }}"
+      alt="welcome"
+    />
+  </header>
   <main>
     {% include lang.html %} {% assign pinned = site.posts | where: 'pin', 'true'
     %} {% assign default = site.posts | where_exp: 'item', 'item.pin != true and
