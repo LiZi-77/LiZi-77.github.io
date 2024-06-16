@@ -4,7 +4,7 @@
 
 @mixin light-scheme {
   /* Framework color */
-  --main-bg: rgb(239 236 236);
+  --main-bg: rgb(225, 234, 241);
   --mask-bg: #c1c3c5;
   --main-border-color: #86848457;
 
@@ -51,7 +51,7 @@
   --avatar-border-color: rgb(206, 206, 206, 0);
 
   /* Topbar */
-  --topbar-bg: rgb(255, 255, 255, 0.7);
+  --topbar-bg: rgba(255, 255, 255, 0.058);
   --topbar-text-color: rgb(78, 78, 78);
   --search-border-color: rgb(240, 240, 240);
   --search-icon-color: #c2c6cc;
@@ -66,7 +66,7 @@
   --toc-highlight: #0550ae;
   --btn-share-color: gray;
   --btn-share-hover-color: #0d6efd;
-  --card-bg: white;
+  --card-bg: rgba(255, 255, 255, 0.681);
   --card-hovor-bg: #e2e2e2;
   --card-shadow: rgb(104, 104, 104, 0.05) 0 2px 6px 0,
     rgba(211, 209, 209, 0.15) 0 0 0 1px;
