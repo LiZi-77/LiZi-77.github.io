@@ -682,7 +682,8 @@ $btn-mb: 0.5rem;
   /*background: var(--sidebar-bg);*/
 
   /* change for background image */
-  background-image: url('../../assets/img/banner/mix.png');
+  //background-image: url('../../assets/img/banner/mix.png');
+  background-color: rgb(244, 238, 229);
   background-size: cover !important;
   background-repeat: no-repeat !important;
   background-position: center !important;
@@ -737,7 +738,7 @@ $btn-mb: 0.5rem;
   //sidebar website title font settings
   .site-title {
     font-family: inherit;
-    font-weight: 900;
+    font-weight: 360;
     font-size: 1.75rem;
     line-height: 1.2;
     letter-spacing: 0.25px;
@@ -778,7 +779,7 @@ $btn-mb: 0.5rem;
         display: flex;
         align-items: center;
         border-radius: 0.75rem;
-        font-weight: 600;
+        font-weight: 350;
 
         &:hover {
           background-color: var(--sidebar-hover-bg);
@@ -1083,8 +1084,8 @@ search {
 #topbar-title {
   display: none;
   font-size: 1.1rem;
-  font-weight: 600;
-  font-family: sans-serif;
+  font-weight: 360;
+  font-family: Palatino, serif;
   color: var(--topbar-text-color);
   text-align: center;
   width: 70%;
