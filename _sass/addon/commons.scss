@@ -683,7 +683,7 @@ $btn-mb: 0.5rem;
 
   /* change for background image */
   //background-image: url('../../assets/img/banner/mix.png');
-  background-color: rgb(244, 238, 229);
+  background-color: var(--sidebar-background-color) !important;
   background-size: cover !important;
   background-repeat: no-repeat !important;
   background-position: center !important;
