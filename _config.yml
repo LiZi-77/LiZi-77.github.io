@@ -93,7 +93,7 @@ theme_mode: # [light | dark]
 # will be added to all media resources (site avatar, posts' images, audio and video files) paths starting with '/'
 #
 # e.g. 'https://cdn.com'
-cdn: "https://cdn.com"
+cdn: "https://raw.githubusercontent.com/LiZi-77/LiZi-77.github.io/master"
 
 # the avatar on sidebar, support local or CORS resources
 avatar: "https://github.com/LiZi-77/LiZi-77.github.io/blob/master/assets/img/bg_avatar/a3.jpg?raw=true"
@@ -225,6 +225,5 @@ jekyll-archives:
   permalinks:
     tag: /tags/:name/
     category: /categories/:name/
-
 #url used for add img in posts
-posts_img_base_url: https://raw.githubusercontent.com/LiZi-77/LiZi-77.github.io/master
+#posts_img_base_url: https://raw.githubusercontent.com/LiZi-77/LiZi-77.github.io/master
