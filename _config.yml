@@ -225,3 +225,6 @@ jekyll-archives:
   permalinks:
     tag: /tags/:name/
     category: /categories/:name/
+
+#url used for add img in posts
+posts_img_base_url: https://raw.githubusercontent.com/LiZi-77/LiZi-77.github.io/master
