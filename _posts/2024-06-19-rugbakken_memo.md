@@ -9,7 +9,7 @@ toc: true
 comments: false
 math: false
 mermaid: false
-pin: true
+pin: false
 image: 
     path: /assets/posts_img/2024-06-19-rugbakken/4.jpg
 ---
