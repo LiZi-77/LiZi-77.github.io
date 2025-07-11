@@ -13,9 +13,13 @@ refactor: true
     />
   </header>
   <main>
+
     {% include lang.html %} {% assign pinned = site.posts | where: 'pin', 'true'
     %} {% assign default = site.posts | where_exp: 'item', 'item.pin != true and
     item.hidden != true' %} {% assign posts = '' | split: '' %}
+
+    <!-- Show heatmap -->
+    {% include heatmap.html %}
 
     <!-- Get pinned posts -->
 
