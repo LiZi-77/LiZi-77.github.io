@@ -40,28 +40,28 @@
   var chartDom = document.getElementById('heatmap');
   var myChart = echarts.init(chartDom);
   
-  // 响应式调整图表大小
+  /* 响应式调整图表大小 */
   window.onresize = function() {
     myChart.resize();
   };
   
-  // 监听容器大小变化
+  /* 监听容器大小变化 */
   function resizeChart() {
     const container = chartDom.parentElement;
-    const containerWidth = container.offsetWidth - 40; // 减去padding
+    const containerWidth = container.offsetWidth - 40; /* 减去padding */
     chartDom.style.width = containerWidth + 'px';
     myChart.resize();
   }
   
-  // 初始化时调整大小
+  /* 初始化时调整大小 */
   setTimeout(resizeChart, 100);
   var option;
 
-  // Jekyll版本：从站点数据构建热力图数据
-  // 数据格式 {date: {wordCount, link, title}}
+  /* Jekyll版本：从站点数据构建热力图数据 */
+  /* 数据格式 {date: {wordCount, link, title}} */
   var dataMap = new Map();
   
-  // Jekyll Liquid语法：遍历所有博客文章
+  /* Jekyll Liquid语法：遍历所有博客文章 */
   {% for post in site.posts %}
     var key = "{{ post.date | date: '%Y-%m-%d' }}";
     var value = dataMap.get(key);
@@ -69,7 +69,7 @@
     var link = "{{ post.url | relative_url }}";
     var title = "{{ post.title | escape }}";
     
-    // 如果同一天有多篇文章，选择字数更多的那篇
+    /* 如果同一天有多篇文章，选择字数更多的那篇 */
     if (value == null || wordCount > value.wordCount) {
       dataMap.set(key, {wordCount, link, title});
     }
@@ -89,7 +89,7 @@
   startDate = echarts.format.formatTime('yyyy-MM-dd', startDate);
   endDate = echarts.format.formatTime('yyyy-MM-dd', endDate);
 
-  // 根据要渲染的月份数改变日期范围
+  /* 根据要渲染的月份数改变日期范围 */
   function heatmap_width(months){             
     var startDate = new Date();
     var mill = startDate.setMonth((startDate.getMonth() - months));
@@ -122,7 +122,7 @@
     title: {
         top: 0,
         left: 'center',
-        text: 'HeatMap'
+        text: '博客创作热力图'
     },
     tooltip: {
       formatter: function (p) {
@@ -139,7 +139,7 @@
         top: 30,
         
         inRange: {   
-          //  [底色, 顶色]
+          /* [底色, 顶色] */
           color: ['#7aa8744c', '#7AA874' ] 
         },
         splitNumber: 4,
@@ -160,7 +160,7 @@
             borderColor: '#fff',
         },
         yearLabel: { show: false },
-        // 月份之间的分割线，目前设置为透明
+        /* 月份之间的分割线，目前设置为透明 */
         splitLine: {
           lineStyle: {
             color: 'rgba(0, 0, 0, 0.0)',
@@ -179,12 +179,12 @@
   
   myChart.setOption(option);
   
-  // 窗口大小改变时重新调整
+  /* 窗口大小改变时重新调整 */
   window.addEventListener('resize', function() {
     resizeChart();
   });
   
-  // 点击事件：跳转到对应文章
+  /* 点击事件：跳转到对应文章 */
   myChart.on('click', function(params) {
     if (params.componentType === 'series') {
       const post = dataMap.get(params.data[0]);
