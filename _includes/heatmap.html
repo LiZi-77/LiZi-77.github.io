@@ -1,195 +1,137 @@
-<div class="heatmap-container" style="position: relative; padding: 20px; margin-bottom: 20px;">
-  <div id="heatmap" style="
-    width: 100%;
-    height: 200px;
-    text-align: center;"
-  ></div>
-</div>
-
-<style>
-.heatmap-container {
-  position: relative;
-  padding: 20px;
-  margin-top: 30px;
-  margin-bottom: 30px;
-  background-color: var(--card-bg);
-  box-shadow: var(--card-shadow);
-  border-radius: 0.625rem;
-  transition: background-color 0.35s ease-in-out;
-}
-
-.heatmap-wrapper::before {
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-color: var(--card-hovor-bg);
-  opacity: 0;
-  transition: opacity 0.35s ease-in-out;
-  border-radius: 0.625rem;
-  z-index: 0;
-}
-
-.heatmap-wrapper:hover::before {
-  opacity: 1;
-}
-</style>
-
+<div id="heatmap" style="width:100%;height:220px;"></div>
 <script src="https://cdn.jsdelivr.net/npm/echarts@5.3.0/dist/echarts.min.js"></script>
-<script type="text/javascript">
-  var chartDom = document.getElementById('heatmap');
-  var myChart = echarts.init(chartDom);
-  
-  /* 响应式调整图表大小 */
-  window.onresize = function() {
-    myChart.resize();
-  };
-  
-  /* 监听容器大小变化 */
+<script>
+  const chartDom = document.getElementById('heatmap');
+  const myChart = echarts.init(chartDom);
+
+  // Responsive sizing
   function resizeChart() {
-    const container = chartDom.parentElement;
-    const containerWidth = container.offsetWidth - 40; /* 减去padding */
-    chartDom.style.width = containerWidth + 'px';
+    const w = chartDom.parentElement.offsetWidth - 40; // minus padding
+    chartDom.style.width = w + 'px';
     myChart.resize();
   }
-  
-  /* 初始化时调整大小 */
+  window.addEventListener('resize', resizeChart);
   setTimeout(resizeChart, 100);
-  var option;
 
-  /* Jekyll版本：从站点数据构建热力图数据 */
-  /* 数据格式 {date: {wordCount, link, title}} */
-  var dataMap = new Map();
-  
-  /* Jekyll Liquid语法：遍历所有博客文章 */
-  {% for post in site.posts %}
-    var key = "{{ post.date | date: '%Y-%m-%d' }}";
-    var value = dataMap.get(key);
-    var wordCount = {{ post.content | number_of_words | divided_by: 1000.0 | round: 1 }};
-    var link = "{{ post.url | relative_url }}";
-    var title = "{{ post.title | escape }}";
-    
-    /* 如果同一天有多篇文章，选择字数更多的那篇 */
-    if (value == null || wordCount > value.wordCount) {
-      dataMap.set(key, {wordCount, link, title});
-    }
+  // ---- build data from ALL posts (not paginator) ----
+  // dataMap: { 'YYYY-MM-DD' -> { wordCount, link, title } }
+  const dataMap = new Map();
+
+  {% assign all_posts = site.posts %}
+  {%- comment -%} If you're on Jekyll 4 with collections: use site.collections.posts.docs {%- endcomment -%}
+  {%- if site.collections and site.collections.posts and site.collections.posts.docs -%}
+    {% assign all_posts = site.collections.posts.docs %}
+  {%- endif -%}
+
+  {% assign first_date = nil %}
+  {% for post in all_posts %}
+    {% assign day = post.date | date: "%Y-%m-%d" %}
+    {% comment %}
+      Compute a rough "thousands of words" value. Replace with your own word counter if you have one:
+      e.g. post.content | number_of_words | divided_by: 1000.0
+    {% endcomment %}
+    {% assign words = post.content | number_of_words %}
+    {% assign kwords = words | plus: 0.0 | divided_by: 1000.0 %}
+    (function() {
+      var key = "{{ day }}";
+      var existing = dataMap.get(key);
+      var wordCount = {{ kwords | round: 1 | default: 0 }};
+      var link = "{{ post.url | relative_url }}";
+      var title = {{ post.title | jsonify }};
+      // keep only the longest post per day
+      if (!existing || wordCount > existing.wordCount) {
+        dataMap.set(key, { wordCount, link, title });
+      }
+    })();
+    {% if forloop.last == false %}
+      {% if first_date == nil or post.date < first_date %}
+        {% assign first_date = post.date %}
+      {% endif %}
+    {% endif %}
   {% endfor %}
 
-  var data = [];
-  for (const [key, value] of dataMap.entries()) {
-    data.push([key, value.wordCount]);
-  }
-  
-  var startDate = new Date();
-  var year_Mill = startDate.setFullYear((startDate.getFullYear() - 1));
-  var startDate = +new Date(year_Mill);
-  var endDate = +new Date();
-
-  var dayTime = 3600 * 24 * 1000;
-  startDate = echarts.format.formatTime('yyyy-MM-dd', startDate);
-  endDate = echarts.format.formatTime('yyyy-MM-dd', endDate);
-
-  /* 根据要渲染的月份数改变日期范围 */
-  function heatmap_width(months){             
-    var startDate = new Date();
-    var mill = startDate.setMonth((startDate.getMonth() - months));
-    var endDate = +new Date();
-    startDate = +new Date(mill);
-
-    endDate = echarts.format.formatTime('yyyy-MM-dd', endDate);
-    startDate = echarts.format.formatTime('yyyy-MM-dd', startDate);
-
-    var showmonth = [];
-    showmonth.push([
-        startDate,
-        endDate
-    ]);
-    return showmonth
-  };
-
-  function getRangeArr() {
-    const containerWidth = chartDom.parentElement.offsetWidth - 40;
-    if (containerWidth >= 600) {
-      return heatmap_width(12);
-    } else if (containerWidth >= 400) {
-      return heatmap_width(9);
-    } else {
-      return heatmap_width(6);
-    }
+  // convert to ECharts data array
+  const data = [];
+  for (const [key, val] of dataMap.entries()) {
+    data.push([key, val.wordCount]);
   }
 
-  option = {
-    title: {
-        top: 0,
-        left: 'center',
-        text: '博客创作热力图'
-    },
+  // ---- date range ----
+  // Use full history (first post -> today). Fallback to last 12 months if unknown.
+  function pad2(n){ return (n<10?'0':'')+n; }
+  function fmt(d){ return d.getFullYear() + '-' + pad2(d.getMonth()+1) + '-' + pad2(d.getDate()); }
+
+  let startStr = "{{ first_date | date: '%Y-%m-%d' }}";
+  if (!startStr || startStr === "") {
+    const d = new Date();
+    d.setFullYear(d.getFullYear() - 1);
+    startStr = fmt(d);
+  }
+  const endStr = fmt(new Date());
+
+  // If you want the responsive “last 6/9/12 months” view, use this instead:
+  function rangeByWidth() {
+    const w = chartDom.parentElement.offsetWidth - 40;
+    const months = w >= 600 ? 12 : (w >= 400 ? 9 : 6);
+    const end = new Date();
+    const start = new Date(end);
+    start.setMonth(start.getMonth() - months);
+    return [fmt(start), fmt(end)];
+  }
+  // Choose one of the following lines:
+  // const range = [startStr, endStr]; // full history
+  const range = [startStr, endStr];        // 全历史窗口
+
+  // visual max based on your data (cap to something reasonable)
+  const maxVal = Math.max(1, ...data.map(d => d[1] || 0));
+  const vizMax = Math.max(5, Math.ceil(maxVal));
+
+  const option = {
+    title: { top: 0, left: 'center', text: '博客创作热力图' },
     tooltip: {
       formatter: function (p) {
         const post = dataMap.get(p.data[0]);
-        return post.title + ' | ' + post.wordCount + ' 千字';
+        if (!post) return p.data[0] + ' | 0 千字';
+        return (post.title || '无标题') + ' | ' + (post.wordCount || 0) + ' 千字';
       }
     },
     visualMap: {
-        min: 0,
-        max: 10,
-        type: 'piecewise',
-        orient: 'horizontal',
-        left: 'center',
-        top: 30,
-        
-        inRange: {   
-          /* [底色, 顶色] */
-          color: ['#7aa8744c', '#7AA874' ] 
-        },
-        splitNumber: 4,
-        text: ['千字', ''],
-        showLabel: true,
-        itemGap: 20,
+      min: 0,
+      max: vizMax,
+      type: 'piecewise',
+      orient: 'horizontal',
+      left: 'center',
+      top: 30,
+      inRange: { color: ['#7aa8744c', '#7AA874'] },
+      splitNumber: 4,
+      text: ['千字', ''],
+      showLabel: true,
+      itemGap: 20
     },
     calendar: {
-        top: 80,
-        left: 20,
-        right: 20,
-        bottom: 10,
-        cellSize: ['auto', 12],
-        range: getRangeArr(),
-        itemStyle: {
-            color: '#F1F1F1',
-            borderWidth: 2.5,
-            borderColor: '#fff',
-        },
-        yearLabel: { show: false },
-        /* 月份之间的分割线，目前设置为透明 */
-        splitLine: {
-          lineStyle: {
-            color: 'rgba(0, 0, 0, 0.0)',
-          }
-        }
+      top: 80, left: 20, right: 20, bottom: 10,
+      cellSize: ['auto', 12],
+      range: range, // IMPORTANT: not nested
+      itemStyle: { color: '#F1F1F1', borderWidth: 2.5, borderColor: '#fff' },
+      yearLabel: { show: false },
+      splitLine: { lineStyle: { color: 'rgba(0,0,0,0.0)' } }
     },
-     dayLabel: {
-    nameMap: ['日', '一', '二', '三', '四', '五', '六']
-    },
+    dayLabel: { nameMap: ['日', '一', '二', '三', '四', '五', '六'] },
     series: {
-        type: 'heatmap',
-        coordinateSystem: 'calendar',
-        data: data,
+      type: 'heatmap',
+      coordinateSystem: 'calendar',
+      data: data
     }
   };
-  
+
   myChart.setOption(option);
-  
-  /* 窗口大小改变时重新调整 */
-  window.addEventListener('resize', function() {
-    resizeChart();
-  });
-  
-  /* 点击事件：跳转到对应文章 */
+  resizeChart();
+
+  // Click to open post
   myChart.on('click', function(params) {
     if (params.componentType === 'series') {
       const post = dataMap.get(params.data[0]);
-      const link = "{{ site.baseurl }}" + post.link;
-      window.open(link, '_blank').focus();
+      if (post && post.link) window.open(post.link, '_blank');
     }
   });
 </script>
